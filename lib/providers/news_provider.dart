@@ -13,11 +13,17 @@ class NewsProvider with ChangeNotifier {
 
   TextEditingController searchController = TextEditingController();
 
+  clearSearch() {
+    searchController.clear();
+    _newsList.clear();
+    notifyListeners();
+  }
+
   getNewsList() async {
     var searchText = searchController.text;
     _newsList.clear();
     var url =
-        'https://newsapi.org/v2/everything?q=$searchText&from=2023-06-14&to=2023-06-14&sortBy=popularity&apiKey=5120a84a31aa49849beb506b9d60b325';
+        'https://newsapi.org/v2/everything?q=$searchText&from=2023-06-14&to=2023-06-10&sortBy=popularity&apiKey=5120a84a31aa49849beb506b9d60b325';
     var response = await http.get(Uri.parse(url));
     var data = json.decode(response.body);
     if (data['status'] == 'ok') {
